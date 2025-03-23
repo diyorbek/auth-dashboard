@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import { NavLink } from "react-router";
-import { usePrivateHttpClient } from "../../api/httpClient";
+import { privateHttpClient } from "../../api/httpClient";
+// import { usePrivateHttpClient } from "../../api/httpClient";
 
 interface UserInfoResponse {
   user: {
@@ -10,7 +11,7 @@ interface UserInfoResponse {
 }
 
 export function ProfilePage() {
-  const privateHttpClient = usePrivateHttpClient();
+  // const privateHttpClient = usePrivateHttpClient();
   const { data, isLoading } = useQuery({
     queryKey: ["profile"],
     queryFn: () => privateHttpClient.get("me").json<UserInfoResponse>(),

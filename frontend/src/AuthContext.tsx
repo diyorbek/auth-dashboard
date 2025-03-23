@@ -1,8 +1,10 @@
 import { createContext, PropsWithChildren, useContext, useState } from "react";
+import { useLogout } from "./api/auth";
+import { tokenStore } from "./api/tokenStore";
+import { useEffectOnce } from "./helpers/useEffectOnce";
 
 const Context = createContext<{
   accessToken?: string;
-  setAccessToken: (token: string | undefined) => void;
 } | null>(null);
 
 /*
@@ -23,16 +25,26 @@ export function useAccessToken() {
   return context.accessToken;
 }
 
-export function useSetAccessToken() {
-  const context = useContext(Context);
-
-  if (!context)
-    throw new Error("useSetAccessToken is used outside AuthContext");
-
-  return context.setAccessToken;
-}
-
 export function AuthContext({ children }: PropsWithChildren) {
+  const logout = useLogout();
   const [accessToken, setAccessToken] = useState<string>();
-  return <Context value={{ accessToken, setAccessToken }}>{children}</Context>;
+
+  useEffectOnce(() => {
+    tokenStore
+      .getToken()
+      .then(setAccessToken)
+      .catch(async () => {
+        await logout();
+      });
+
+    const unsubscribe = tokenStore.subscribe(async () => {
+      console.log("inside hook");
+
+      setAccessToken(await tokenStore.getToken());
+    });
+
+    return () => void unsubscribe();
+  });
+
+  return <Context value={{ accessToken }}>{children}</Context>;
 }

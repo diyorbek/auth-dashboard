@@ -1,5 +1,7 @@
 import { useQuery } from "react-query";
-import { usePrivateHttpClient } from "../../api/httpClient";
+import { privateHttpClient } from "../../api/httpClient";
+import { useAccessToken } from "../../AuthContext";
+// import { usePrivateHttpClient } from "../../api/httpClient";
 
 interface ProjectsResponse {
   projects: Array<{
@@ -9,7 +11,7 @@ interface ProjectsResponse {
 }
 
 export function ProjectsPage() {
-  const privateHttpClient = usePrivateHttpClient();
+  const token = useAccessToken();
 
   const { data, isLoading, refetch, isRefetching } = useQuery({
     queryKey: ["projects"],

@@ -1,18 +1,17 @@
 import { Outlet } from "react-router";
-import { useRefreshToken } from "../../api/auth";
+// import { useRefreshToken } from "../../api/auth";
 import { useAccessToken } from "../../AuthContext";
 import { DashboardLayout } from "../../components/DashboardLayout";
-import { useEffectOnce } from "../../helpers/useEffectOnce";
 
 export function ProtectedRoutes() {
-  const getAccessToken = useRefreshToken();
+  // const getAccessToken = useRefreshToken();
   const accessToken = useAccessToken();
 
-  useEffectOnce(() => {
-    // Request `accessToken` when protected routes directly opened.
-    // When navigated from Login or Register pages, `accessToken` will already exist.
-    if (!accessToken) getAccessToken();
-  });
+  // useEffectOnce(() => {
+  //   // Request `accessToken` when protected routes directly opened.
+  //   // When navigated from Login or Register pages, `accessToken` will already exist.
+  //   if (!accessToken) getAccessToken();
+  // });
 
   if (!accessToken)
     return (

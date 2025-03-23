@@ -3,14 +3,14 @@ import { Lock, Mail, User } from "lucide-react";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router";
-import { useSetAccessToken } from "../../AuthContext";
+// import { useSetAccessToken } from "../../AuthContext";
 import { useAuthRequests } from "../../api/auth";
 import { RegisterRequestBody } from "../../api/types";
 
 // Register Form Component
 export function RegisterPage() {
   const { requestRegister } = useAuthRequests();
-  const setAccessToken = useSetAccessToken();
+  // const setAccessToken = useSetAccessToken();
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
@@ -35,7 +35,7 @@ export function RegisterPage() {
 
       const { accessToken } = await registerUser(formData);
 
-      setAccessToken(accessToken);
+      // setAccessToken(accessToken);
       navigate("/", { replace: true });
     } catch (error) {
       const httpError = error as HTTPError;

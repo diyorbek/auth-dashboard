@@ -3,14 +3,14 @@ import { Lock, Mail } from "lucide-react";
 import { useState } from "react";
 import { useMutation } from "react-query";
 import { Link, useNavigate, useSearchParams } from "react-router";
-import { useSetAccessToken } from "../../AuthContext";
+// import { useSetAccessToken } from "../../AuthContext";
 
 import { useAuthRequests } from "../../api/auth";
 import { LoginRequestBody } from "../../api/types";
 
 export function LoginPage() {
   const { requestLogin } = useAuthRequests();
-  const setAccessToken = useSetAccessToken();
+  // const setAccessToken = useSetAccessToken();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const backUrl = searchParams.get("searchParams");
@@ -30,7 +30,7 @@ export function LoginPage() {
 
     try {
       const { accessToken } = await loginUser(formData);
-      setAccessToken(accessToken);
+      // setAccessToken(accessToken);
       console.log({ backUrl });
 
       console.log("navigating");
